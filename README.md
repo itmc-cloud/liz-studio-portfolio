@@ -14,14 +14,13 @@ created in `dist/`; `npm run preview` serves it locally.
 
 ## Portfolio content
 
-The project entries in `src/content/projects.ts` and the abstract artwork in
-`src/App.tsx` are explicitly labeled placeholders. Replace them only with
-authorized project details and original or approved imagery. Optional project
-images, galleries, and years can be added to the `PortfolioProject` data.
+Copy lives in `src/content/site.ts` in Spanish (default) and English; visitors
+switch with the ES / EN toggle. Artwork comes from the slides in
+`public/portfolio/`; each piece is a pixel region of a 1600×900 slide, so to
+change one, edit its `slide(file, x, y, w, h)` entry.
 
-Set `VITE_CONTACT_EMAIL` in a local `.env.local` file or the deployment
-environment to show a working email link. The contact section will continue to
-show a clear placeholder until an address is configured.
+The contact email defaults to the address in the portfolio; set
+`VITE_CONTACT_EMAIL` in `.env.local` or the deployment environment to override it.
 
 Deploy the Vite app from the repository’s `main` branch on Vercel. No deployment
 URL is hardcoded in the application.
