@@ -83,11 +83,26 @@ export const illustrations: Piece[] = [
   },
 ]
 
-export const photos: Piece[] = [
+export const agendaPhotos: Piece[] = [
   { id: 'floral', title: { es: 'Agenda floral 2024', en: 'Floral planner 2024' }, crop: slide('agendas.jpeg', 50, 85, 228, 279) },
   { id: 'cerezo', title: { es: 'Agenda flor de cerezo', en: 'Cherry blossom planner' }, crop: slide('agendas.jpeg', 548, 85, 209, 279) },
   { id: 'protea', title: { es: 'Agenda protea', en: 'Protea planner' }, crop: slide('agendas.jpeg', 771, 85, 214, 266) },
   { id: 'coleccion', title: { es: 'Colección de agendas', en: 'Planner collection' }, crop: slide('agendas.jpeg', 1018, 47, 234, 278) },
+]
+
+export const photos: Piece[] = [
+  { id: 'textil-blanco', title: { es: 'Toallas blancas', en: 'White towels' }, crop: slide('textiles.jpeg', 45, 66, 238, 408) },
+  { id: 'textil-floral', title: { es: 'Toalla con estampado floral', en: 'Floral-print towel' }, crop: slide('textiles.jpeg', 285, 270, 393, 592) },
+  { id: 'textil-colores', title: { es: 'Toallas de colores', en: 'Coloured towels' }, crop: slide('textiles.jpeg', 680, 38, 294, 447) },
+  { id: 'textil-hojas', title: { es: 'Toallas con estampado de hojas', en: 'Leaf-print towels' }, crop: slide('textiles.jpeg', 998, 38, 558, 842) },
+]
+
+export const marquee: Localized[] = [
+  { es: 'Logos', en: 'Logos' },
+  { es: 'Branding', en: 'Branding' },
+  { es: 'Agendas', en: 'Planners' },
+  { es: 'Ilustración', en: 'Illustration' },
+  { es: 'Fotografía', en: 'Photography' },
 ]
 
 export const copy = {
@@ -98,7 +113,7 @@ export const copy = {
   nav: [
     { href: '#logos', label: { es: 'Logos', en: 'Logos' } },
     { href: '#branding', label: { es: 'Branding', en: 'Branding' } },
-    { href: '#editorial', label: { es: 'Editorial', en: 'Editorial' } },
+    { href: '#editorial', label: { es: 'Agendas', en: 'Planners' } },
     { href: '#ilustracion', label: { es: 'Ilustración', en: 'Illustration' } },
     { href: '#fotografia', label: { es: 'Fotografía', en: 'Photography' } },
     { href: '#about', label: { es: 'Sobre mí', en: 'About' } },
@@ -136,7 +151,7 @@ export const copy = {
     },
     editorial: {
       eyebrow: { es: 'Diseño editorial', en: 'Editorial design' },
-      title: { es: 'Agendas personalizadas', en: 'Custom planners' },
+      title: { es: 'Agendas', en: 'Planners' },
       note: {
         es: 'Agendas 2024 en tamaño A5 (5,8 × 8,3 pulgadas) con separadores mensuales, habit tracker y stickers.',
         en: '2024 planners in A5 size (5.8 × 8.3 inches) with monthly dividers, habit tracker and stickers.',
@@ -151,7 +166,7 @@ export const copy = {
     photography: {
       eyebrow: { es: 'Producto', en: 'Product' },
       title: { es: 'Fotografía', en: 'Photography' },
-      note: { es: 'Fotografía de producto de las agendas.', en: 'Product photography of the planners.' },
+      note: { es: 'Fotografía de producto: textiles.', en: 'Product photography: textiles.' },
     },
   },
   about: {
