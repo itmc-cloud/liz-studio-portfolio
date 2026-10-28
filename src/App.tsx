@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import {
   SLIDE,
+  agendaPhotos,
   agendasSlide,
   brands,
   brandingSlide,
   copy,
+  marquee,
   coverCrop,
   illustrations,
   logos,
@@ -56,7 +58,7 @@ function SectionHeading({
   note: string
 }) {
   return (
-    <div className="section-heading">
+    <div className="section-heading" data-reveal>
       <div>
         <p className="eyebrow">{eyebrow}</p>
         <h2>
@@ -72,8 +74,8 @@ function SectionHeading({
 function PieceGrid({ items, lang, className = '' }: { items: Piece[]; lang: Lang; className?: string }) {
   return (
     <div className={`piece-grid ${className}`}>
-      {items.map((piece) => (
-        <figure className="piece" key={piece.id}>
+      {items.map((piece, i) => (
+        <figure className="piece" key={piece.id} data-reveal style={{ '--i': i % 4 } as CSSProperties}>
           <Crop crop={piece.crop} label={piece.title[lang]} />
           <figcaption>
             <strong>{piece.title[lang]}</strong>
@@ -90,6 +92,25 @@ function App() {
   const t = (value: Record<Lang, string>) => value[lang]
   const contactEmail = import.meta.env.VITE_CONTACT_EMAIL?.trim() || copy.contact.email
   const { sections, about } = copy
+
+  useEffect(() => {
+    const items = document.querySelectorAll<HTMLElement>('[data-reveal]')
+    if (!('IntersectionObserver' in window)) return
+    document.documentElement.classList.add('js-reveal')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    )
+    items.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -149,6 +170,20 @@ function App() {
           </a>
         </section>
 
+        <div className="marquee" aria-hidden="true">
+          <div className="marquee__track">
+            {[0, 1].map((n) => (
+              <ul key={n}>
+                {marquee.map((word) => (
+                  <li key={word.es}>
+                    {t(word)} <span>✳</span>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+
         <section className="work-section section-wrap" id="logos" aria-label={t(sections.logos.title)}>
           <SectionHeading
             eyebrow={t(sections.logos.eyebrow)}
@@ -164,10 +199,12 @@ function App() {
             title={t(sections.branding.title)}
             note={t(sections.branding.note)}
           />
-          <img className="slide" src={brandingSlide} alt={t(sections.branding.alt)} loading="lazy" />
+          <div className="slide-scroll" data-reveal>
+            <img className="slide" src={brandingSlide} alt={t(sections.branding.alt)} loading="lazy" />
+          </div>
           <ul className="brand-list">
-            {brands.map((brand) => (
-              <li key={brand.id}>
+            {brands.map((brand, i) => (
+              <li key={brand.id} data-reveal style={{ '--i': i } as CSSProperties}>
                 <strong>{brand.name}</strong>
                 <span>{t(brand.detail)}</span>
               </li>
@@ -181,7 +218,10 @@ function App() {
             title={t(sections.editorial.title)}
             note={t(sections.editorial.note)}
           />
-          <img className="slide" src={agendasSlide} alt={t(sections.editorial.alt)} loading="lazy" />
+          <div className="slide-scroll" data-reveal>
+            <img className="slide" src={agendasSlide} alt={t(sections.editorial.alt)} loading="lazy" />
+          </div>
+          <PieceGrid items={agendaPhotos} lang={lang} className="piece-grid--photos piece-grid--below" />
         </section>
 
         <section className="work-section section-wrap" id="ilustracion" aria-label={t(sections.illustration.title)}>
@@ -204,8 +244,10 @@ function App() {
 
         <section className="about-section" id="about" aria-labelledby="about-title">
           <div className="section-wrap about-section__inner">
-            <Crop crop={portraitCrop} label={t(about.portraitAlt)} className="about-portrait" />
-            <div className="about-section__copy">
+            <div data-reveal className="about-portrait-wrap">
+              <Crop crop={portraitCrop} label={t(about.portraitAlt)} className="about-portrait" />
+            </div>
+            <div className="about-section__copy" data-reveal style={{ '--i': 1 } as CSSProperties}>
               <p className="eyebrow">{t(about.eyebrow)}</p>
               <h2 id="about-title">
                 {t(about.title1)}
@@ -220,7 +262,7 @@ function App() {
                 ))}
               </ul>
             </div>
-            <aside className="about-side">
+            <aside className="about-side" data-reveal style={{ '--i': 2 } as CSSProperties}>
               <h3>{t(about.educationTitle)}</h3>
               <dl className="education">
                 {about.education.map((item) => (
@@ -255,7 +297,7 @@ function App() {
               <span>{t(copy.contact.title2)}</span>
             </h2>
           </div>
-          <div className="contact-section__action">
+          <div className="contact-section__action" data-reveal>
             <p>{t(copy.contact.text)}</p>
             <a className="contact-link" href={`mailto:${contactEmail}`}>
               {contactEmail} <span aria-hidden="true">↗</span>
